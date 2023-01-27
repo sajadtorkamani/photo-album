@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply flex min-h-screen flex-col;
+  }
+
+  #root {
+    @apply flex flex-1 flex-col;
+  }
+}
