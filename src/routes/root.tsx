@@ -8,11 +8,6 @@ export async function loader() {
   return { photos }
 }
 
-async function action() {
-  const photo = await createPhoto()
-  return { photo }
-}
-
 export const Root: React.FC = () => {
   const { photos } = useLoaderData() as { photos: Photo[] }
 

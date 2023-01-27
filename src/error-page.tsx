@@ -5,7 +5,6 @@ import { isRouteErrorResponse, useRouteError } from 'react-router-dom'
 // You can obtain more info about the type of error by using the useRouteError hook.
 export const ErrorPage: React.FC = () => {
   const error = useRouteError()
-  console.error(error)
 
   function renderErrorMessage() {
     if (isRouteErrorResponse(error)) {
