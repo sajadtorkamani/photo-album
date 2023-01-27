@@ -18,6 +18,8 @@ import {
   action as registerAction,
 } from './routes/auth/register'
 import { ROUTES } from './constants'
+import { Logout, action as logoutAction } from './routes/auth/logout'
+import NotFound from './routes/not-found'
 
 // Create the router
 const router = createBrowserRouter([
@@ -44,6 +46,12 @@ const router = createBrowserRouter([
     element: <Register />,
     loader: registerLoader,
     action: registerAction,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: ROUTES.logout,
+    element: <NotFound />,
+    action: logoutAction,
     errorElement: <ErrorPage />,
   },
 ])

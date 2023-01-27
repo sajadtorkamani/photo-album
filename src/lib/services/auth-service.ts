@@ -20,3 +20,7 @@ export function isAuthenticated() {
 export function authenticate() {
   window.localStorage.setItem('token', 'token123')
 }
+
+export function logout() {
+  window.localStorage.removeItem('token')
+}

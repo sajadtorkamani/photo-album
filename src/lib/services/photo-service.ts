@@ -1,4 +1,3 @@
-import delay from 'delay'
 import { z } from 'zod'
 
 export const CreatePhotoInputSchema = z.object({
@@ -16,13 +15,10 @@ export interface Photo {
 }
 
 export async function getPhotos(): Promise<Photo[]> {
-  await delay(1000)
   return []
 }
 
 export async function createPhoto(input: CreatePhotoInput) {
-  await delay(1000)
-
   return {
     photo: {
       id: 1,

@@ -58,9 +58,6 @@ export const CreatePhoto: React.FC = () => {
     }
   }
 
-  const buttonText =
-    navigation.state === 'submitting' ? 'Adding photo...' : 'Add photo'
-
   return (
     <>
       <PageTitle>Add photo</PageTitle>
@@ -106,14 +103,18 @@ export const CreatePhoto: React.FC = () => {
           <textarea
             name="note"
             id="note"
-            rows={5}
-            className="w-100 block"
+            rows={3}
+            className="w-100 block min-w-[300px]"
             placeholder="Add a note here"
           />
         </FormGroup>
 
         <div className="mt-4">
-          <Button type="submit">{buttonText}</Button>
+          <Button type="submit">
+            {navigation.state === 'submitting'
+              ? 'Adding photo...'
+              : 'Add photo'}
+          </Button>
         </div>
       </Form>
     </>
