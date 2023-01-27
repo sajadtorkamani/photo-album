@@ -10,15 +10,17 @@ export const FormErrors: React.FC<Props> = ({ errors }) => {
     return null
   }
 
+  debugger
+
   return (
     <div className="mt-2 mb-3 border border-red-500 p-2 text-sm text-red-500">
       <p className="mb-2">Please fix the following errors</p>
 
       <ul className="pl-5">
-        {formattedErrors.map(([key, value]) => (
-          <li key={key} className="mb-1 list-disc">
+        {formattedErrors.map(([errorPath, errorMessage]) => (
+          <li key={errorPath} className="mb-1 list-disc">
             <>
-              {key}: {value}
+              {errorPath}: {errorMessage}
             </>
           </li>
         ))}

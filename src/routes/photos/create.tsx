@@ -1,25 +1,30 @@
 import React from 'react'
+import z from 'zod'
 import { useRef, useState } from 'react'
 import { PageTitle } from '../../components/PageTitle'
 import { Button } from '../../components/Button'
 import { ActionFunctionArgs, Form, json, useActionData } from 'react-router-dom'
 import { UnstyledButton } from '../../components/UnstyledButton'
-import { createPhoto } from '../../lib/services/photo-service'
 import { FormErrors } from '../../components/FormErrors'
+import { createPhoto } from '../../lib/services/photo-service'
+import { validationErrors } from '../../lib/helpers'
+
+const createContactSchema = z.object({
+  file: z.string().min(1, 'Please select a file'),
+  note: z.string().min(5),
+})
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData()
   const data = Object.fromEntries(formData)
-  console.log(data)
 
-  return json({
-    errors: {
-      note: 'Not good enough note',
-    },
-  })
+  const parsedData = createContactSchema.safeParse(data)
+  if (parsedData.success) {
+    const photo = await createPhoto(parsedData)
+    return { photo }
+  }
 
-  // const photo = await createPhoto()
-  // return { photo }
+  return json({ errors: validationErrors(parsedData.error) })
 }
 
 export const CreatePhoto: React.FC = () => {
@@ -55,6 +60,7 @@ export const CreatePhoto: React.FC = () => {
           <label htmlFor="note" className="mb-1 block">
             Image
           </label>
+
           <UnstyledButton onClick={handleAddAttachment} type="button">
             Attach file
           </UnstyledButton>
@@ -88,6 +94,7 @@ export const CreatePhoto: React.FC = () => {
           <label htmlFor="note" className="mb-1 block">
             Note
           </label>
+
           <textarea
             name="note"
             id="note"

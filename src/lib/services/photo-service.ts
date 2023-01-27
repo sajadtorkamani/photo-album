@@ -10,7 +10,7 @@ export async function getPhotos() {
   return []
 }
 
-export async function createPhoto() {
+export async function createPhoto(data: unknown) {
   return {
     photo: {
       id: 1,
