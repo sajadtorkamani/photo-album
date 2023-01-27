@@ -20,6 +20,7 @@ import {
 import { validationErrors } from '../../lib/helpers'
 import { FormGroup } from '../../components/FormGroup'
 import { FormLabel } from '../../components/FormLabel'
+import { ROUTES } from '../../constants'
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData()
@@ -28,7 +29,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const parsedInput = CreatePhotoInputSchema.safeParse(data)
   if (parsedInput.success) {
     await createPhoto(parsedInput.data)
-    return redirect('/')
+    return redirect(ROUTES.root)
   }
 
   return json({ errors: validationErrors(parsedInput.error) })

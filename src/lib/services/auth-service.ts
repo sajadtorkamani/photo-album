@@ -12,3 +12,11 @@ export function registerUser(input: RegisterUserInput) {
   delay(3000)
   return {}
 }
+
+export function isAuthenticated() {
+  return window.localStorage.getItem('token') === 'token123'
+}
+
+export function authenticate() {
+  window.localStorage.setItem('token', 'token123')
+}

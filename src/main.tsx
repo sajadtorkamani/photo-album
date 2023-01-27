@@ -13,8 +13,9 @@ import {
   loader as photoListLoader,
 } from './routes/photos/photo-list'
 import {
-  Authenticate,
-  action as authenticateAction,
+  Register,
+  loader as registerLoader,
+  action as registerAction,
 } from './routes/auth/register'
 import { ROUTES } from './constants'
 
@@ -40,8 +41,9 @@ const router = createBrowserRouter([
   },
   {
     path: ROUTES.register,
-    element: <Authenticate />,
-    action: authenticateAction,
+    element: <Register />,
+    loader: registerLoader,
+    action: registerAction,
     errorElement: <ErrorPage />,
   },
 ])

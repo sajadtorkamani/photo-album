@@ -10,6 +10,8 @@ export function loader() {
   if (!token) {
     return redirect(ROUTES.register)
   }
+
+  return {}
 }
 
 export const Root: React.FC = () => {
