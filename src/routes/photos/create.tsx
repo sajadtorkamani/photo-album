@@ -3,7 +3,13 @@ import z from 'zod'
 import { useRef, useState } from 'react'
 import { PageTitle } from '../../components/PageTitle'
 import { Button } from '../../components/Button'
-import { ActionFunctionArgs, Form, json, useActionData } from 'react-router-dom'
+import {
+  ActionFunctionArgs,
+  Form,
+  json,
+  redirect,
+  useActionData,
+} from 'react-router-dom'
 import { UnstyledButton } from '../../components/UnstyledButton'
 import { FormErrors } from '../../components/FormErrors'
 import { createPhoto } from '../../lib/services/photo-service'
@@ -12,7 +18,7 @@ import { FormGroup } from '../../components/FormGroup'
 import { FormLabel } from '../../components/FormLabel'
 
 const createContactSchema = z.object({
-  file: z.string().min(1, 'Please select a file'),
+  // file: z.string().min(1, 'Please select a file'),
   note: z.string().min(5),
 })
 
@@ -22,15 +28,15 @@ export async function action({ request }: ActionFunctionArgs) {
 
   const parsedData = createContactSchema.safeParse(data)
   if (parsedData.success) {
-    const photo = await createPhoto(parsedData)
-    return { photo }
+    await createPhoto(parsedData)
+    return redirect('/')
   }
 
   return json({ errors: validationErrors(parsedData.error) })
 }
 
 export const CreatePhoto: React.FC = () => {
-  const actionData = useActionData() as any
+  const actionData = useActionData() as any // How is one to infer the type here?
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null)
 

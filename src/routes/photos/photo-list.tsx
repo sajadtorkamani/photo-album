@@ -1,8 +1,10 @@
 import React from 'react'
-import { PageTitle } from '../../components/PageTitle'
 import { useLoaderData } from 'react-router-dom'
+import delay from 'delay'
+import { PageTitle } from '../../components/PageTitle'
 
 export async function loader() {
+  await delay(2000)
   return { contacts: [] }
 }
 
