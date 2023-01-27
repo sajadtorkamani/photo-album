@@ -2,12 +2,10 @@ import React from 'react'
 import { Outlet, redirect } from 'react-router-dom'
 import { Sidebar } from '../components/Sidebar'
 import { ROUTES } from '../constants'
+import { isAuthenticated } from '../lib/services/auth-service'
 
 export function loader() {
-  const name = 'sajad'
-  const token = window.localStorage.getItem('token')
-
-  if (!token) {
+  if (!isAuthenticated) {
     return redirect(ROUTES.register)
   }
 
