@@ -8,6 +8,8 @@ import { UnstyledButton } from '../../components/UnstyledButton'
 import { FormErrors } from '../../components/FormErrors'
 import { createPhoto } from '../../lib/services/photo-service'
 import { validationErrors } from '../../lib/helpers'
+import { FormGroup } from '../../components/FormGroup'
+import { FormLabel } from '../../components/FormLabel'
 
 const createContactSchema = z.object({
   file: z.string().min(1, 'Please select a file'),
@@ -54,12 +56,9 @@ export const CreatePhoto: React.FC = () => {
       <PageTitle>Add photo</PageTitle>
 
       <FormErrors errors={actionData?.errors || {}} />
-
       <Form method="post">
-        <div className="mb-5">
-          <label htmlFor="note" className="mb-1 block">
-            Image
-          </label>
+        <FormGroup>
+          <FormLabel htmlFor="note">Image</FormLabel>
 
           <UnstyledButton onClick={handleAddAttachment} type="button">
             Attach file
@@ -88,12 +87,10 @@ export const CreatePhoto: React.FC = () => {
               </div>
             </>
           )}
-        </div>
+        </FormGroup>
 
-        <div className="mb-3">
-          <label htmlFor="note" className="mb-1 block">
-            Note
-          </label>
+        <FormGroup>
+          <FormLabel htmlFor="note">Note</FormLabel>
 
           <textarea
             name="note"
@@ -102,7 +99,7 @@ export const CreatePhoto: React.FC = () => {
             className="w-100 block"
             placeholder="Add a note here"
           />
-        </div>
+        </FormGroup>
 
         <div className="mt-4">
           <Button type="submit">Add photo</Button>
