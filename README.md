@@ -11,3 +11,4 @@
 - Form validation with Zod
 - Battle test Vite so we can use it instead of create-react-app
 - Use `~` to alias imports to `src/`
+- Have fun because YOLO
