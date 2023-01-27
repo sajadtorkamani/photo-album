@@ -9,6 +9,7 @@ import {
   json,
   redirect,
   useActionData,
+  useNavigation,
 } from 'react-router-dom'
 import { UnstyledButton } from '../../components/UnstyledButton'
 import { FormErrors } from '../../components/FormErrors'
@@ -36,6 +37,7 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export const CreatePhoto: React.FC = () => {
+  const navigation = useNavigation()
   const actionData = useActionData() as any // How is one to infer the type here?
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null)
@@ -56,6 +58,11 @@ export const CreatePhoto: React.FC = () => {
       setImagePreviewUrl(URL.createObjectURL(file))
     }
   }
+
+  const buttonText =
+    navigation.state === 'loading' || navigation.state === 'submitting'
+      ? 'Adding photo...'
+      : 'Add photo'
 
   return (
     <>
@@ -108,7 +115,7 @@ export const CreatePhoto: React.FC = () => {
         </FormGroup>
 
         <div className="mt-4">
-          <Button type="submit">Add photo</Button>
+          <Button type="submit">{buttonText}</Button>
         </div>
       </Form>
     </>

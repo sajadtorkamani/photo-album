@@ -1,23 +1,23 @@
 import React from 'react'
 import { useLoaderData } from 'react-router-dom'
-import delay from 'delay'
 import { PageTitle } from '../../components/PageTitle'
+import { getPhotos } from '../../lib/services/photo-service'
 
 export async function loader() {
-  await delay(2000)
-  return { contacts: [] }
+  const photos = await getPhotos()
+  return { photos }
 }
 
 type LoaderData = Awaited<ReturnType<typeof loader>>
 
 export const PhotoList: React.FC = () => {
-  const { contacts } = useLoaderData() as LoaderData
+  const { photos } = useLoaderData() as LoaderData
 
   return (
     <>
       <PageTitle>Your photos</PageTitle>
       <p className="text-gray-600">
-        {contacts.length > 0 ? 'TODO: Show contacts' : 'You have no contacts.'}
+        {photos.length > 0 ? 'TODO: Show photos' : 'You have no photos.'}
       </p>
     </>
   )
