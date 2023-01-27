@@ -60,9 +60,7 @@ export const CreatePhoto: React.FC = () => {
   }
 
   const buttonText =
-    navigation.state === 'loading' || navigation.state === 'submitting'
-      ? 'Adding photo...'
-      : 'Add photo'
+    navigation.state === 'submitting' ? 'Adding photo...' : 'Add photo'
 
   return (
     <>
