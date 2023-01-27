@@ -2,13 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import { Root, loader as rootLoader } from './routes/root'
+import { Root } from './routes/root'
 import { ErrorPage } from './error-page'
 import {
   CreatePhoto,
   action as createPhotoAction,
 } from './routes/photos/create'
-import { PhotoList } from './routes/photos/photo-list'
+import {
+  PhotoList,
+  loader as photoListLoader,
+} from './routes/photos/photo-list'
 
 // Create the router
 const router = createBrowserRouter([
@@ -16,11 +19,11 @@ const router = createBrowserRouter([
     path: '/',
     element: <Root />,
     errorElement: <ErrorPage />,
-    loader: rootLoader,
     children: [
       {
         index: true,
         element: <PhotoList />,
+        loader: photoListLoader,
       },
       {
         action: createPhotoAction,
