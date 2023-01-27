@@ -13,27 +13,25 @@ import {
 } from 'react-router-dom'
 import { UnstyledButton } from '../../components/UnstyledButton'
 import { FormErrors } from '../../components/FormErrors'
-import { createPhoto } from '../../lib/services/photo-service'
+import {
+  createPhoto,
+  CreatePhotoInputSchema,
+} from '../../lib/services/photo-service'
 import { validationErrors } from '../../lib/helpers'
 import { FormGroup } from '../../components/FormGroup'
 import { FormLabel } from '../../components/FormLabel'
-
-const createContactSchema = z.object({
-  // file: z.string().min(1, 'Please select a file'),
-  note: z.string().min(5),
-})
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData()
   const data = Object.fromEntries(formData)
 
-  const parsedData = createContactSchema.safeParse(data)
-  if (parsedData.success) {
-    await createPhoto(parsedData)
+  const parsedInput = CreatePhotoInputSchema.safeParse(data)
+  if (parsedInput.success) {
+    await createPhoto(parsedInput.data)
     return redirect('/')
   }
 
-  return json({ errors: validationErrors(parsedData.error) })
+  return json({ errors: validationErrors(parsedInput.error) })
 }
 
 export const CreatePhoto: React.FC = () => {
@@ -67,6 +65,7 @@ export const CreatePhoto: React.FC = () => {
       <PageTitle>Add photo</PageTitle>
 
       <FormErrors errors={actionData?.errors || {}} />
+
       <Form method="post">
         <FormGroup>
           <FormLabel htmlFor="note">Image</FormLabel>

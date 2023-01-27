@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import { Root } from './routes/root'
+import { Root, loader as rootLoader } from './routes/root'
 import { ErrorPage } from './error-page'
 import {
   CreatePhoto,
@@ -12,12 +12,18 @@ import {
   PhotoList,
   loader as photoListLoader,
 } from './routes/photos/photo-list'
+import {
+  Authenticate,
+  action as authenticateAction,
+} from './routes/auth/register'
+import { ROUTES } from './constants'
 
 // Create the router
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    loader: rootLoader,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -31,6 +37,12 @@ const router = createBrowserRouter([
         element: <CreatePhoto />,
       },
     ],
+  },
+  {
+    path: ROUTES.register,
+    element: <Authenticate />,
+    action: authenticateAction,
+    errorElement: <ErrorPage />,
   },
 ])
 

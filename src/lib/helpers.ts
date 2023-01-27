@@ -5,7 +5,8 @@ export function validationErrors(error: ZodError) {
 
   error.issues.forEach((issue) => {
     const errorPath = issue.path.join(',')
-    errors[errorPath] = issue.message.split(' ').slice(1).join(' ')
+    const errorMessage = issue.message
+    errors[errorPath] = errorMessage
   })
 
   return errors
