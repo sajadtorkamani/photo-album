@@ -18,7 +18,7 @@ import {
   action as registerAction,
 } from './routes/auth/register'
 import { ROUTES } from './constants'
-import { Logout, action as logoutAction } from './routes/auth/logout'
+import { action as logoutAction } from './routes/auth/logout'
 import NotFound from './routes/not-found'
 
 // Create the router

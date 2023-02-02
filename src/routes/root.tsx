@@ -4,21 +4,19 @@ import { Sidebar } from '../components/Sidebar'
 import { ROUTES } from '../constants'
 import { isAuthenticated } from '../lib/services/auth-service'
 
-export function loader() {
-  if (!isAuthenticated) {
+export async function loader() {
+  if (!isAuthenticated()) {
     return redirect(ROUTES.register)
   }
 
   return {}
 }
 
-export const Root: React.FC = () => {
-  return (
-    <div className="flex flex-1">
-      <Sidebar />
-      <main className="p-5">
-        <Outlet />
-      </main>
-    </div>
-  )
-}
+export const Root: React.FC = () => (
+  <div className="flex flex-1">
+    <Sidebar />
+    <main className="p-5">
+      <Outlet />
+    </main>
+  </div>
+)
