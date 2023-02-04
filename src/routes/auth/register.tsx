@@ -8,19 +8,16 @@ import {
   useNavigate,
   useNavigation,
 } from 'react-router-dom'
-import { z } from 'zod'
+import { DevButton } from '../../components/ActionButton'
 import { Button } from '../../components/Button'
 import { FormErrors } from '../../components/FormErrors'
+import { z } from 'zod'
 import { FormGroup } from '../../components/FormGroup'
 import { FormLabel } from '../../components/FormLabel'
 import { ROUTES } from '../../constants'
-import { validationErrors } from '../../lib/helpers'
-import {
-  authenticate,
-  isAuthenticated,
-  RegisterInputSchema,
-  registerUser,
-} from '../../lib/services/auth-service'
+import { isDev, validationErrors } from '../../lib/helpers'
+import { authenticate, isAuthenticated } from '../../lib/services/auth-service'
+import { api } from '../../lib/services/api'
 
 export async function loader() {
   if (isAuthenticated()) {
@@ -35,14 +32,22 @@ export async function action({ request }: ActionFunctionArgs) {
     const formData = await request.formData()
     const data = Object.fromEntries(formData)
 
-    const parsedInput = RegisterInputSchema.safeParse(data)
-    if (parsedInput.success) {
-      await registerUser(parsedInput.data)
-      authenticate()
-      return redirect(ROUTES.root)
+    const schema = z.object({
+      email: z.string().email(),
+      password: z.string().min(6),
+    })
+
+    const parsedData = schema.safeParse(data)
+    if (!parsedData.success) {
+      return json({ errors: validationErrors(parsedData.error) })
     }
 
-    return json({ errors: validationErrors(parsedInput.error) })
+    const response = await api.post('/auth/register', parsedData.data)
+
+    debugger
+
+    authenticate()
+    return redirect(ROUTES.root)
   }
 
   // Assume errors
@@ -75,6 +80,23 @@ export const Register: React.FC = () => {
             {navigation.state === 'submitting' ? 'Registering' : 'Register'}
           </Button>
         </Form>
+
+        {isDev() && (
+          <DevButton
+            onClick={() => {
+              console.log('eg')
+              debugger
+              document.querySelector<HTMLInputElement>(
+                'input[name="email"]'
+              )!.value = 'sajadtorkamani1@gmail.com'
+              document.querySelector<HTMLInputElement>(
+                'input[name="password"]'
+              )!.value = import.meta.env.USER_PASSWORD
+            }}
+          >
+            Fill form
+          </DevButton>
+        )}
       </section>
     </div>
   )
