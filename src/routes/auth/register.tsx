@@ -5,7 +5,6 @@ import {
   json,
   redirect,
   useActionData,
-  useNavigate,
   useNavigation,
 } from 'react-router-dom'
 import { DevButton } from '../../components/ActionButton'
@@ -56,7 +55,6 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export const Register: React.FC = () => {
   const actionData = useActionData() as any // How is one to infer the type here?
-  const navigation = useNavigation()
 
   return (
     <div className="p-4">
@@ -76,9 +74,7 @@ export const Register: React.FC = () => {
             <input type="password" name="password" />
           </FormGroup>
 
-          <Button type="submit">
-            {navigation.state === 'submitting' ? 'Registering' : 'Register'}
-          </Button>
+          <Button type="submit">Register</Button>
         </Form>
 
         {isDev() && (
